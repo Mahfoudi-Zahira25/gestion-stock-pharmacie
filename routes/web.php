@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard/pharmacie', function () {
+    return view('dashboard.pharmacie');
+})->name('dashboard.pharmacie')->middleware('auth');
+
+Route::get('/dashboard/service', function () {
+    return view('dashboard.service');
+})->name('dashboard.service')->middleware('auth');
+
+

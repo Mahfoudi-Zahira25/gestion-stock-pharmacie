@@ -11,22 +11,26 @@ return new class extends Migration
      *
      * @return void
      */
+   
     public function up()
-    {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-    }
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->enum('role', ['responsable_pharmacie', 'responsable_service'])->default('responsable_pharmacie');
+    });
+}
+
+public function down()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->dropColumn('role');
+    });
+}
+
 
     /**
      * Reverse the migrations.
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('password_resets');
-    }
+   
 };
